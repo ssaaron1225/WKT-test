@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Perfect Internet Plan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .quiz-container {
+            background: #f8f6f3;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 500px;
+            min-height: 400px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            background: #80BC00;
+            height: 8px;
+            width: 100%;
+            position: relative;
+        }
+        
+        .progress-fill {
+            background: #003DA6;
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            position: relative;
+        }
+        
+        .progress-icon {
+            position: absolute;
+            right: -8px;
+            top: -8px;
+            width: 24px;
+            height: 24px;
+            background: #003DA6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+        }
+        
+        .quiz-content {
+            padding: 30px 20px;
+            text-align: center;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .question-number {
+            color: #003DA6;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .question-title {
+            color: #003DA6;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            line-height: 1.3;
+        }
+        
+        .question-subtitle {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        
+        .option {
+            background: white;
+            border: 2px solid #80BC00;
+            border-radius: 10px;
+            padding: 15px 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .option:hover {
+            border-color: #80BC00;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            background: #f8fff8;
+        }
+        
+        .option.selected {
+            border-color: #80BC00;
+            background: #f8fff8;
+        }
+        
+        .option-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .option-text {
+            font-size: 11px;
+            font-weight: 600;
+            color: #003DA6;
+            line-height: 1.2;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #003DA6;
+            border: 2px solid #80BC00;
+        }
+        
+        .btn-secondary:hover {
+            background: #80BC00;
+            color: white;
+        }
+        
+        .btn-primary {
+            background: #003DA6;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #002A75;
+            transform: translateY(-2px);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .form-group {
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #003DA6;
+        }
+        
+        .skip-link {
+            color: #003DA6;
+            text-decoration: none;
+            font-size: 14px;
+            margin-top: 15px;
+            display: inline-block;
+        }
+        
+        .skip-link:hover {
+            text-decoration: underline;
+        }
+        
+        .result-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .result-title {
+            font-size: 24px;
+            color: #003DA6;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .result-description {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .result-features {
+            text-align: left;
+            margin: 20px 0;
+        }
+        
+        .result-features li {
+            margin: 8px 0;
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .quiz-content {
+                padding: 20px 15px;
+            }
+            
+            .question-title {
+                font-size: 18px;
+            }
+            
+            .options-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            
+            .option-text {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill">
+                <div class="progress-icon">🏠</div>
+            </div>
+        </div>
+        
+        <!-- Question 0: Start Screen -->
+        <div class="quiz-content" id="question0">
+            <div class="question-title">Find Your Perfect Internet Plan</div>
+            <div class="question-subtitle">
+                Let's figure out which fiber plan fits your lifestyle best. 
+                This will only take a few minutes!
+            </div>
+            
+            <div style="margin: 40px 0;">
+                <div class="form-group">
+                    <input type="email" class="form-input" placeholder="Enter your email address" id="emailInput">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-input" placeholder="Enter your street address" id="addressInput">
+                </div>
+            </div>
+            
+            <button class="btn btn-primary" onclick="nextQuestion()">Let's Get Started!</button>
+            <br>
+            <a href="#" class="skip-link" onclick="skipToQuestions()">I'll skip this for now 😊</a>
+        </div>
+        
+        <!-- Question 1: Household -->
+        <div class="quiz-content hidden" id="question1">
+            <div class="question-number">Question 1 of 6</div>
+            <div class="question-title">Tell us about your household</div>
+            
+            <div class="options-grid">
+                <div class="option" onclick="selectOption(1, 'single')">
+                    <div class="option-icon">👤</div>
+                    <div class="option-text">Just me or my spouse</div>
+                </div>
+                <div class="option" onclick="selectOption(1, 'small-family')">
+                    <div class="option-icon">👨‍👩‍👧</div>
+                    <div class="option-text">Small family with kids</div>
+                </div>
+                <div class="option" onclick="selectOption(1, 'large-family')">
+                    <div class="option-icon">👨‍👩‍👧‍👦</div>
+                    <div class="option-text">Large family or multi-generational</div>
+                </div>
+                <div class="option" onclick="selectOption(1, 'roommates')">
+                    <div class="option-icon">🏠</div>
+                    <div class="option-text">House with roommates</div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="previousQuestion()">Previous</button>
+                <button class="btn btn-primary" id="nextBtn1" onclick="nextQuestion()" disabled>Next</button>
+            </div>
+        </div>
+        
+        <!-- Question 2: Daily Activities -->
+        <div class="quiz-content hidden" id="question2">
+            <div class="question-number">Question 2 of 6</div>
+            <div class="question-title">What's a typical evening at your place?</div>
+            
+            <div class="options-grid">
+                <div class="option" onclick="selectOption(2, 'quiet')">
+                    <div class="option-icon">📚</div>
+                    <div class="option-text">Reading, light browsing, checking email</div>
+                </div>
+                <div class="option" onclick="selectOption(2, 'streaming')">
+                    <div class="option-icon">📺</div>
+                    <div class="option-text">Watching Netflix or YouTube</div>
+                </div>
+                <div class="option" onclick="selectOption(2, 'busy')">
+                    <div class="option-icon">📱</div>
+                    <div class="option-text">Everyone's on different devices</div>
+                </div>
+                <div class="option" onclick="selectOption(2, 'work')">
+                    <div class="option-icon">💻</div>
+                    <div class="option-text">Working from home or video calls</div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="previousQuestion()">Previous</button>
+                <button class="btn btn-primary" id="nextBtn2" onclick="nextQuestion()" disabled>Next</button>
+            </div>
+        </div>
+        
+        <!-- Question 3: Frustrations -->
+        <div class="quiz-content hidden" id="question3">
+            <div class="question-number">Question 3 of 6</div>
+            <div class="question-title">What drives you crazy about your current internet?</div>
+            <div class="question-subtitle">Be honest - we've all been there!</div>
+            
+            <div class="options-grid">
+                <div class="option" onclick="selectOption(3, 'slow')">
+                    <div class="option-icon">🐌</div>
+                    <div class="option-text">Everything loads so slowly</div>
+                </div>
+                <div class="option" onclick="selectOption(3, 'buffering')">
+                    <div class="option-icon">⏳</div>
+                    <div class="option-text">Shows keep buffering at the worst moments</div>
+                </div>
+                <div class="option" onclick="selectOption(3, 'calls')">
+                    <div class="option-icon">📞</div>
+                    <div class="option-text">Video calls freeze during important meetings</div>
+                </div>
+                <div class="option" onclick="selectOption(3, 'outages')">
+                    <div class="option-icon">⚡</div>
+                    <div class="option-text">It goes out way too often</div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="previousQuestion()">Previous</button>
+                <button class="btn btn-primary" id="nextBtn3" onclick="nextQuestion()" disabled>Next</button>
+            </div>
+        </div>
+        
+        <!-- Question 4: Work Needs -->
+        <div class="quiz-content hidden" id="question4">
+            <div class="question-number">Question 4 of 6</div>
+            <div class="question-title">How important is reliable internet for your work?</div>
+            
+            <div class="options-grid">
+                <div class="option" onclick="selectOption(4, 'retired')">
+                    <div class="option-icon">🌅</div>
+                    <div class="option-text">I'm retired - it's mostly for fun</div>
+                </div>
+                <div class="option" onclick="selectOption(4, 'occasional')">
+                    <div class="option-icon">📧</div>
+                    <div class="option-text">Just email and occasional work</div>
+                </div>
+                <div class="option" onclick="selectOption(4, 'remote')">
+                    <div class="option-icon">🏠</div>
+                    <div class="option-text">I work from home regularly</div>
+                </div>
+                <div class="option" onclick="selectOption(4, 'business')">
+                    <div class="option-icon">💼</div>
+                    <div class="option-text">I run a business from home</div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="previousQuestion()">Previous</button>
+                <button class="btn btn-primary" id="nextBtn4" onclick="nextQuestion()" disabled>Next</button>
+            </div>
+        </div>
+        
+        <!-- Question 5: Priorities -->
+        <div class="quiz-content hidden" id="question5">
+            <div class="question-number">Question 5 of 6</div>
+            <div class="question-title">What matters most to you?</div>
+            
+            <div class="options-grid">
+                <div class="option" onclick="selectOption(5, 'price')">
+                    <div class="option-icon">💰</div>
+                    <div class="option-text">Getting the best value for my money</div>
+                </div>
+                <div class="option" onclick="selectOption(5, 'speed')">
+                    <div class="option-icon">⚡</div>
+                    <div class="option-text">Having the fastest speeds available</div>
+                </div>
+                <div class="option" onclick="selectOption(5, 'reliability')">
+                    <div class="option-icon">🔒</div>
+                    <div class="option-text">Rock-solid reliability</div>
+                </div>
+                <div class="option" onclick="selectOption(5, 'support')">
+                    <div class="option-icon">🤝</div>
+                    <div class="option-text">Great local customer service</div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="previousQuestion()">Previous</button>
+                <button class="btn btn-primary" id="nextBtn5" onclick="nextQuestion()" disabled>Next</button>
+            </div>
+        </div>
+        
+        <!-- Question 6: Location -->
+        <div class="quiz-content hidden" id="question6">
+            <div class="question-number">Question 6 of 6</div>
+            <div class="question-title">Tell us about your property</div>
+            
+            <div class="options-grid">
+                <div class="option" onclick="selectOption(6, 'small-lot')">
+                    <div class="option-icon">🏡</div>
+                    <div class="option-text">Small lot, close to neighbors</div>
+                </div>
+                <div class="option" onclick="selectOption(6, 'acreage')">
+                    <div class="option-icon">🌾</div>
+                    <div class="option-text">Few acres, some space around me</div>
+                </div>
+                <div class="option" onclick="selectOption(6, 'farm')">
+                    <div class="option-icon">🚜</div>
+                    <div class="option-text">Farm or large property</div>
+                </div>
+                <div class="option" onclick="selectOption(6, 'outdoor')">
+                    <div class="option-icon">📶</div>
+                    <div class="option-text">Need WiFi for barn, shop, or outdoor areas</div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="previousQuestion()">Previous</button>
+                <button class="btn btn-primary" id="nextBtn6" onclick="showResults()" disabled>See My Results!</button>
+            </div>
+        </div>
+        
+        <!-- Results Screen -->
+        <div class="quiz-content hidden" id="results">
+            <div class="result-card">
+                <div class="result-title" id="resultTitle">Your Perfect Plan</div>
+                <div style="text-align: center; margin: 15px 0;">
+                    <div style="font-size: 16px; color: #003DA6;">We knew this was the right fit!</div>
+                </div>
+                <div class="result-description" id="resultDescription">
+                    Based on your answers, this plan will give you exactly what you need.
+                </div>
+                <div class="result-features" id="resultFeatures">
+                    <!-- Features will be populated by JavaScript -->
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn btn-primary" onclick="signUp()">Get Started with This Plan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 0;
+        let answers = {};
+        const totalQuestions = 6;
+        
+        function updateProgress() {
+            const progressPercent = (currentQuestion / (totalQuestions + 1)) * 100;
+            document.getElementById('progressFill').style.width = progressPercent + '%';
+        }
+        
+        function selectOption(questionNum, value) {
+            // Remove selected class from all options in this question
+            const options = document.querySelectorAll(`#question${questionNum} .option`);
+            options.forEach(opt => opt.classList.remove('selected'));
+            
+            // Add selected class to clicked option
+            event.target.closest('.option').classList.add('selected');
+            
+            // Store answer
+            answers[questionNum] = value;
+            
+            // Enable next button
+            const nextBtn = document.getElementById(`nextBtn${questionNum}`);
+            if (nextBtn) nextBtn.disabled = false;
+        }
+        
+        function nextQuestion() {
+            document.getElementById(`question${currentQuestion}`).classList.add('hidden');
+            currentQuestion++;
+            document.getElementById(`question${currentQuestion}`).classList.remove('hidden');
+            updateProgress();
+        }
+        
+        function previousQuestion() {
+            document.getElementById(`question${currentQuestion}`).classList.add('hidden');
+            currentQuestion--;
+            document.getElementById(`question${currentQuestion}`).classList.remove('hidden');
+            updateProgress();
+        }
+        
+        function skipToQuestions() {
+            document.getElementById('question0').classList.add('hidden');
+            currentQuestion = 1;
+            document.getElementById('question1').classList.remove('hidden');
+            updateProgress();
+        }
+        
+        function showResults() {
+            document.getElementById('question6').classList.add('hidden');
+            document.getElementById('results').classList.remove('hidden');
+            updateProgress();
+            calculateRecommendation();
+        }
+        
+        function calculateRecommendation() {
+            let plan = 'Essential';
+            let title = 'Essential Plan - 100 Mbps';
+            let description = 'Perfect for light internet use and staying connected.';
+            let features = [
+                '✓ 100 Mbps download speeds',
+                '✓ Great for email, browsing, and streaming',
+                '✓ Supports 2-3 devices',
+                '✓ $39.99/month with no data caps',
+                '✓ Local Kentucky customer support'
+            ];
+            
+            // Score different factors
+            let speedScore = 0;
+            let familyScore = 0;
+            let workScore = 0;
+            
+            // Family size scoring
+            if (answers[1] === 'large-family' || answers[1] === 'roommates') familyScore += 2;
+            if (answers[1] === 'small-family') familyScore += 1;
+            
+            // Activity scoring
+            if (answers[2] === 'busy') speedScore += 2;
+            if (answers[2] === 'streaming' || answers[2] === 'work') speedScore += 1;
+            
+            // Work needs scoring
+            if (answers[4] === 'business') workScore += 3;
+            if (answers[4] === 'remote') workScore += 2;
+            if (answers[4] === 'occasional') workScore += 1;
+            
+            // Frustration scoring
+            if (answers[3] === 'slow' || answers[3] === 'buffering') speedScore += 1;
+            
+            // Location scoring - outdoor needs boost premium recommendation
+            if (answers[6] === 'outdoor' || answers[6] === 'farm') speedScore += 2;
+            if (answers[6] === 'acreage') speedScore += 1;
+            
+            const totalScore = speedScore + familyScore + workScore;
+            
+            if (totalScore >= 5) {
+                plan = 'Premium';
+                title = 'Premium Plan - 1 Gig';
+                description = 'Lightning-fast speeds for busy households and home businesses.';
+                features = [
+                    '✓ 1 Gigabit download speeds',
+                    '✓ Perfect for multiple users and devices',
+                    '✓ 4K streaming on multiple TVs',
+                    '✓ Superior video conferencing quality',
+                    '✓ $79.99/month with unlimited data',
+                    '✓ Priority customer support'
+                ];
+            } else if (totalScore >= 3) {
+                plan = 'Plus';
+                title = 'Plus Plan - 500 Mbps';
+                description = 'Great speeds for families and moderate work-from-home needs.';
+                features = [
+                    '✓ 500 Mbps download speeds',
+                    '✓ Ideal for families with multiple devices',
+                    '✓ Smooth HD streaming and video calls',
+                    '✓ Supports home office needs',
+                    '✓ $59.99/month with no data limits',
+                    '✓ 24/7 local support'
+                ];
+            }
+            
+            document.getElementById('resultTitle').textContent = title;
+            document.getElementById('resultDescription').textContent = description;
+            
+            const featuresHtml = features.map(feature => `<li>${feature}</li>`).join('');
+            document.getElementById('resultFeatures').innerHTML = `<ul>${featuresHtml}</ul>`;
+        }
+        
+        function signUp() {
+            alert('Thanks for taking our quiz! A representative will contact you soon to get you connected.');
+        }
+        
+        // Initialize progress
+        updateProgress();
+    </script>
+</body>
+</html>

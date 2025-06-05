@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Perfect Business Internet Plan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .quiz-container {
+            background: #f8f6f3;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 500px;
+            min-height: 400px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            background: #80BC00;
+            height: 8px;
+            width: 100%;
+            position: relative;
+        }
+        
+        .progress-fill {
+            background: #003DA6;
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            position: relative;
+        }
+        
+        .progress-icon {
+            position: absolute;
+            right: -8px;
+            top: -8px;
+            width: 24px;
+            height: 24px;
+            background: #003DA6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+        }
+        
+        .quiz-content {
+            padding: 30px 20px;
+            text-align: center;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .question-number {
+            color: #80BC00;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .question-title {
+            color: #80BC00;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            line-height: 1.3;
+        }
+        
+        .question-subtitle {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        
+        .option {
+            background: white;
+            border: 2px solid #80BC00;
+            border-radius: 10px;
+            padding: 15px 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .option:hover {
+            border-color: #80BC00;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            background: #f8fff8;
+        }
+        
+        .option.selected {
+            border-color: #80BC00;
+            background: #f8fff8;
+        }
+        
+        .option-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .option-text {
+            font-size: 11px;
+            font-weight: 600;
+            color: #003DA6;
+            line-height: 1.2;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #003DA6;
+            border: 2px solid #80BC00;
+        }
+        
+        .btn-secondary:hover {
+            background: #80BC00;
+            color: white;
+        }
+        
+        .btn-primary {
+            background: #003DA6;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #002A75;
+            transform: translateY(-2px);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .form-group {
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #003DA6;
+        }
+        
+        .skip-link {
+            color: #003DA6;
+            text-decoration: none;
+            font-size: 14px;
+            margin-top: 15px;
+            display: inline-block;
+        }
+        
+        .skip-link:hover {
+            text-decoration: underline;
+        }
+        
+        .result-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .result-title {
+            font-size: 24px;
+            color: #80BC00;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .result-description {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .result-features {
+            text-align: left;
+            margin: 20px 0;
+        }
+        
+        .result-features li {
+            margin: 8px 0;
+            font-size: 14px;
+            color: #555;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .quiz-content {
+                padding: 20px 15px;
+            }
+            
+            .question-title {
+                font-size: 18px;
+            }
+            
+            .options-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            
+            .option-text {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill">
+                <div class="progress-icon">🏢</div>
+            </div>
+        </div>
+        
+        <!-- Question 0: Start Screen -->
+        <div class="quiz-content" id="question0">
+            <div class="question-title">Find Your Perfect Business Internet Plan</div>
+            <div class="question-subtitle">
+                Let's find the right internet solution for your business needs. 
+                This will only take a few minutes!
+            </div>
+            
+            <div style="margin: 40px 0;">
+                <div class="form-group">
+                    <input type="email" class="form-input" placeholder="Enter your business email address" id="emailInput">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-input" placeholder="Enter your business address" id="addressInput">
+                </div>
+            </div>
+            
+            <button class="btn btn-primary" onclick="nextQuestion()">Let's Get Started!</button>
+            <br>
+            <a href="#" class="skip-link" onclick="skipToQuestions()">I'll skip this for now 😊</a>
+        </div>
+        
+        <!-- Question 1: Business Size -->
+        <div class="quiz-content hidden" id="question1">
+            <div class="question-number">Question 1 of 6</div>
+            <div class="question-title">How many people work in your office?</div>
+            
+            <div class="options-grid">
+                <div class="option" onclick="selectOption(1, 'solo')">
+                    <div class="option-icon">👤</div>
+                    <div class="option-text">Just me (solo business)</div>
+                </div>
+                <div class="option" onclick="selectOption(1, 'small')">
+                    <div class="option-icon">👥</div>
+                    <div class="option-text">2-5 employees</div>
+                </div>
+                <div class="option" onclick="selectOption(1, 'medium')">
+                    <div class="option-icon">👨‍👩‍👧‍👦</div>
+                    <div class="option-text">6-15 employees</div>
+                </div>
+                <div class="option" onclick="selectOption(1, 'large')">
+                    <div class="option-icon">🏢</div>
+                    <div class="option-text">16+ employees</div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="previousQuestion()">Previous</button>
+                <button class="btn btn-primary" id="nextBtn1" onclick="nextQuestion()" disabled>Next</button>
+            </div>
+        </div>
+        
+        <!-- Question 2: Business Type -->
+        <div class="quiz-content hidden" id="question2">
+            <div class="question-number">Question 2 of 6</div>
+            <div class="question-title">What type of business do you run?</div>
+            
+            <div class="options-grid">
+                <div class="option" onclick="selectOption(2, 'retail')">
+                    <div class="option-icon">🏪</div>
+                    <div class="option-text">Retail store or restaurant</div>
+                </div>
+                <div class="option" onclick="selectOption(2, 'office')">
+                    <div class="option-icon">💼</div>
+                    <div class="option-text">Professional office</div>
+                </div>
+                <div class="option" onclick="selectOption(2, 'agriculture')">
+                    <div class="option-icon">🚜</div>
+                    <div class="option-text">Farm or agricultural operation</div>
+                </div>
+                <div class="option" onclick="selectOption(2, 'service')">
+                    <div class="option-icon">🔧</div>
+                    <div class="option-text">Service business</div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="previousQuestion()">Previous</button>
+                <button class="btn btn-primary" id="nextBtn2" onclick="nextQuestion()" disabled>Next</button>
+            </div>
+        </div>
+        
+        <!-- Question 3: Customer Access -->
+        <div class="quiz-content hidden" id="question3">
+            <div class="question-number">Question 3 of 6</div>
+            <div class="question-title">Do customers visit your business?</div>
+            <div class="question-subtitle">This helps us know if you need guest WiFi</div>
+            
+            <div class="options-grid">
+                <div class="option" onclick="selectOption(3, 'yes-many')">
+                    <div class="option-icon">🚶‍♂️</div>
+                    <div class="option-text">Yes, lots of foot traffic</div>
+                </div>
+                <div class="option" onclick="selectOption(3, 'yes-some')">
+                    <div class="option-icon">🤝</div>
+                    <div class="option-text">Yes, appointments/meetings</div>
+                </div>
+                <div class="option" onclick="selectOption(3, 'occasional')">
+                    <div class="option-icon">📅</div>
+                    <div class="option-text">Occasionally</div>
+                </div>
+                <div class="option" onclick="selectOption(3, 'no')">
+                    <div class="option-icon">🏠</div>
+                    <div class="option-text">No, mostly office work</div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="previousQuestion()">Previous</button>
+                <button class="btn btn-primary" id="nextBtn3" onclick="nextQuestion()" disabled>Next</button>
+            </div>
+        </div>
+        
+        <!-- Question 4: Payment Processing -->
+        <div class="quiz-content hidden" id="question4">
+            <div class="question-number">Question 4 of 6</div>
+            <div class="question-title">Do you process credit card payments?</div>
+            
+            <div class="options-grid">
+                <div class="option" onclick="selectOption(4, 'heavy')">
+                    <div class="option-icon">💳</div>
+                    <div class="option-text">Yes, constantly throughout the day</div>
+                </div>
+                <div class="option" onclick="selectOption(4, 'regular')">
+                    <div class="option-icon">💰</div>
+                    <div class="option-text">Yes, several times daily</div>
+                </div>
+                <div class="option" onclick="selectOption(4, 'occasional')">
+                    <div class="option-icon">🛒</div>
+                    <div class="option-text">Occasionally</div>
+                </div>
+                <div class="option" onclick="selectOption(4, 'no')">
+                    <div class="option-icon">📄</div>
+                    <div class="option-text">No, cash/check only</div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="previousQuestion()">Previous</button>
+                <button class="btn btn-primary" id="nextBtn4" onclick="nextQuestion()" disabled>Next</button>
+            </div>
+        </div>
+        
+        <!-- Question 5: Backup Internet -->
+        <div class="quiz-content hidden" id="question5">
+            <div class="question-number">Question 5 of 6</div>
+            <div class="question-title">How important is backup internet if your main connection goes down?</div>
+            
+            <div class="options-grid">
+                <div class="option" onclick="selectOption(5, 'critical')">
+                    <div class="option-icon">🚨</div>
+                    <div class="option-text">Critical - we lose money every minute</div>
+                </div>
+                <div class="option" onclick="selectOption(5, 'important')">
+                    <div class="option-icon">⚠️</div>
+                    <div class="option-text">Important - causes major problems</div>
+                </div>
+                <div class="option" onclick="selectOption(5, 'moderate')">
+                    <div class="option-icon">😐</div>
+                    <div class="option-text">Inconvenient but manageable</div>
+                </div>
+                <div class="option" onclick="selectOption(5, 'low')">
+                    <div class="option-icon">😊</div>
+                    <div class="option-text">Not a big deal</div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="previousQuestion()">Previous</button>
+                <button class="btn btn-primary" id="nextBtn5" onclick="nextQuestion()" disabled>Next</button>
+            </div>
+        </div>
+        
+        <!-- Question 6: Content Control -->
+        <div class="quiz-content hidden" id="question6">
+            <div class="question-number">Question 6 of 6</div>
+            <div class="question-title">Do you want control over what employees can access online?</div>
+            
+            <div class="options-grid">
+                <div class="option" onclick="selectOption(6, 'strict')">
+                    <div class="option-icon">🔒</div>
+                    <div class="option-text">Yes, strict controls needed</div>
+                </div>
+                <div class="option" onclick="selectOption(6, 'basic')">
+                    <div class="option-icon">🛡️</div>
+                    <div class="option-text">Basic filtering would be nice</div>
+                </div>
+                <div class="option" onclick="selectOption(6, 'minimal')">
+                    <div class="option-icon">👀</div>
+                    <div class="option-text">Just block obvious bad stuff</div>
+                </div>
+                <div class="option" onclick="selectOption(6, 'open')">
+                    <div class="option-icon">🌐</div>
+                    <div class="option-text">Open access - I trust my team</div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button class="btn btn-secondary" onclick="previousQuestion()">Previous</button>
+                <button class="btn btn-primary" id="nextBtn6" onclick="showResults()" disabled>See My Results!</button>
+            </div>
+        </div>
+        
+        <!-- Results Screen -->
+        <div class="quiz-content hidden" id="results">
+            <div class="result-card">
+                <div class="result-title" id="resultTitle">Your Perfect Business Plan</div>
+                <div style="text-align: center; margin: 15px 0;">
+                    <div style="font-size: 16px; color: #003DA6;">We knew this was the right fit!</div>
+                </div>
+                <div class="result-description" id="resultDescription">
+                    Based on your business needs, this plan will keep you running smoothly.
+                </div>
+                <div class="result-features" id="resultFeatures">
+                    <!-- Features will be populated by JavaScript -->
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn btn-primary" onclick="signUp()">Get Started with This Plan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 0;
+        let answers = {};
+        const totalQuestions = 6;
+        
+        function updateProgress() {
+            const progressPercent = (currentQuestion / (totalQuestions + 1)) * 100;
+            document.getElementById('progressFill').style.width = progressPercent + '%';
+        }
+        
+        function selectOption(questionNum, value) {
+            // Remove selected class from all options in this question
+            const options = document.querySelectorAll(`#question${questionNum} .option`);
+            options.forEach(opt => opt.classList.remove('selected'));
+            
+            // Add selected class to clicked option
+            event.target.closest('.option').classList.add('selected');
+            
+            // Store answer
+            answers[questionNum] = value;
+            
+            // Enable next button
+            const nextBtn = document.getElementById(`nextBtn${questionNum}`);
+            if (nextBtn) nextBtn.disabled = false;
+        }
+        
+        function nextQuestion() {
+            document.getElementById(`question${currentQuestion}`).classList.add('hidden');
+            currentQuestion++;
+            document.getElementById(`question${currentQuestion}`).classList.remove('hidden');
+            updateProgress();
+        }
+        
+        function previousQuestion() {
+            document.getElementById(`question${currentQuestion}`).classList.add('hidden');
+            currentQuestion--;
+            document.getElementById(`question${currentQuestion}`).classList.remove('hidden');
+            updateProgress();
+        }
+        
+        function skipToQuestions() {
+            document.getElementById('question0').classList.add('hidden');
+            currentQuestion = 1;
+            document.getElementById('question1').classList.remove('hidden');
+            updateProgress();
+        }
+        
+        function showResults() {
+            document.getElementById('question6').classList.add('hidden');
+            document.getElementById('results').classList.remove('hidden');
+            updateProgress();
+            calculateRecommendation();
+        }
+        
+        function calculateRecommendation() {
+            let plan = 'Business Essential';
+            let title = 'Business Essential - 200 Mbps';
+            let description = 'Perfect for small businesses with basic internet needs.';
+            let features = [
+                '✓ 200 Mbps dedicated business speeds',
+                '✓ Priority support with local technicians',
+                '✓ Basic security package included',
+                '✓ Guest WiFi network setup',
+                '✓ $89.99/month with no contracts',
+                '✓ 99.9% uptime guarantee'
+            ];
+            
+            // Score different factors
+            let speedScore = 0;
+            let reliabilityScore = 0;
+            let securityScore = 0;
+            
+            // Business size scoring
+            if (answers[1] === 'large') speedScore += 3;
+            if (answers[1] === 'medium') speedScore += 2;
+            if (answers[1] === 'small') speedScore += 1;
+            
+            // Business type scoring
+            if (answers[2] === 'retail') {
+                speedScore += 2;
+                reliabilityScore += 2;
+            }
+            if (answers[2] === 'office') speedScore += 1;
+            if (answers[2] === 'agriculture') reliabilityScore += 1;
+            
+            // Customer access scoring
+            if (answers[3] === 'yes-many') speedScore += 2;
+            if (answers[3] === 'yes-some') speedScore += 1;
+            
+            // Payment processing scoring
+            if (answers[4] === 'heavy') {
+                speedScore += 3;
+                reliabilityScore += 3;
+            }
+            if (answers[4] === 'regular') {
+                speedScore += 2;
+                reliabilityScore += 2;
+            }
+            
+            // Backup importance scoring
+            if (answers[5] === 'critical') reliabilityScore += 3;
+            if (answers[5] === 'important') reliabilityScore += 2;
+            if (answers[5] === 'moderate') reliabilityScore += 1;
+            
+            // Content control scoring
+            if (answers[6] === 'strict' || answers[6] === 'basic') securityScore += 2;
+            if (answers[6] === 'minimal') securityScore += 1;
+            
+            const totalScore = speedScore + reliabilityScore + securityScore;
+            
+            if (totalScore >= 12) {
+                plan = 'Business Premium Plus';
+                title = 'Business Premium Plus - 1 Gig with Failover';
+                description = 'Enterprise-grade connectivity with full redundancy and security.';
+                features = [
+                    '✓ 1 Gigabit dedicated fiber with failover backup',
+                    '✓ 24/7 priority support with 2-hour response',
+                    '✓ Advanced security suite with content filtering',
+                    '✓ Guest WiFi with custom portal',
+                    '✓ Static IP addresses included',
+                    '✓ 99.99% uptime SLA',
+                    '✓ $199.99/month - includes all features'
+                ];
+            } else if (totalScore >= 7) {
+                plan = 'Business Plus';
+                title = 'Business Plus - 500 Mbps';
+                description = 'Enhanced business internet with added reliability features.';
+                features = [
+                    '✓ 500 Mbps dedicated business speeds',
+                    '✓ 4-hour response priority support',
+                    '✓ Enhanced security with basic filtering',
+                    '✓ Professional guest WiFi setup',
+                    '✓ Backup internet option available',
+                    '✓ $139.99/month with business SLA',
+                    '✓ Free installation and setup'
+                ];
+            }
+            
+            document.getElementById('resultTitle').textContent = title;
+            document.getElementById('resultDescription').textContent = description;
+            
+            const featuresHtml = features.map(feature => `<li>${feature}</li>`).join('');
+            document.getElementById('resultFeatures').innerHTML = `<ul>${featuresHtml}</ul>`;
+        }
+        
+        function signUp() {
+            alert('Thanks for taking our business assessment! A business specialist will contact you soon to discuss your needs.');
+        }
+        
+        // Initialize progress
+        updateProgress();
+    </script>
+</body>
+</html>

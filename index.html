@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WK&T - Connecting Kentucky Communities for 75 Years</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .header {
+            background: #003DA6;
+            color: white;
+            padding: 1rem 0;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #80BC00;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(0, 61, 166, 0.7), rgba(0, 61, 166, 0.7)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23e8e8e8" width="1200" height="600"/><text x="600" y="280" text-anchor="middle" font-family="Arial" font-size="18" fill="%23666">Family using devices together</text><text x="600" y="320" text-anchor="middle" font-family="Arial" font-size="18" fill="%23666">Kentucky countryside setting</text></svg>');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 5rem 2rem;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .hero-tagline {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+        
+        .section {
+            padding: 2.5rem 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .about-section {
+            background: white;
+        }
+        
+        .section-title {
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #003DA6;
+            font-weight: 700;
+            position: relative;
+        }
+        
+        .milestone-title {
+            background: linear-gradient(135deg, #003DA6 0%, #80BC00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 3.5rem;
+            font-weight: 800;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        
+        .milestone-title::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(135deg, #80BC00 0%, #003DA6 100%);
+            border-radius: 2px;
+        }
+        
+        .milestone-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(135deg, #003DA6 0%, #80BC00 100%);
+            border-radius: 2px;
+        }
+        
+        .celebration-highlight {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e8f4fd 100%);
+            border: 3px solid #80BC00;
+            border-radius: 15px;
+            padding: 3rem 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .celebration-highlight::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(128,188,0,0.1) 0%, transparent 70%);
+            animation: celebrate 8s ease-in-out infinite;
+        }
+        
+        @keyframes celebrate {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .features-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .feature-item {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 6px;
+            text-align: left;
+            border-left: 4px solid #80BC00;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: box-shadow 0.3s;
+        }
+        
+        .feature-item:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #003DA6;
+            margin-bottom: 0.8rem;
+        }
+        
+        .feature-description {
+            color: #555;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        
+        .quiz-section {
+            background: #f8f9fa;
+            border-top: 3px solid #80BC00;
+        }
+        
+        .quiz-intro {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .quiz-intro h3 {
+            font-size: 1.8rem;
+            color: #003DA6;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .quiz-intro p {
+            font-size: 1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .quiz-option {
+            background: white;
+            padding: 2rem 1.5rem;
+            border-radius: 6px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+        
+        .quiz-option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+        
+        .quiz-option h4 {
+            font-size: 1.4rem;
+            color: #003DA6;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .quiz-option p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-primary {
+            background: #003DA6;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #002A75;
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background: #80BC00;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5A8600;
+            transform: translateY(-1px);
+        }
+        
+        .services-section {
+            background: white;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            text-align: center;
+        }
+        
+        .service-item {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: none;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: #80BC00;
+            font-size: 3rem;
+            font-weight: normal;
+        }
+        
+        .service-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: #003DA6;
+        }
+        
+        .service-description {
+            color: #666;
+            line-height: 1.5;
+            font-size: 0.9rem;
+            max-width: 250px;
+            margin: 0 auto;
+        }
+        
+        .heritage-section {
+            background: #003DA6;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .heritage-section h3 {
+            font-size: 2rem;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+        
+        .heritage-section p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .testimonials {
+            background: #f8f9fa;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .testimonial-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-left: 3px solid #80BC00;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: #555;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            color: #003DA6;
+            font-size: 0.9rem;
+        }
+        
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .footer p {
+            margin-bottom: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .quiz-options {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .section {
+                padding: 3rem 1rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">WK&T</div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#home">For Home</a></li>
+                    <li><a href="#business">For Business</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#account">My Account</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Connecting Rural Communities</h1>
+        <div class="hero-subtitle">Member-owned cooperative serving Kentucky, Illinois, and Tennessee for 75 years</div>
+        <div class="hero-tagline">From telephone lines to fiber optic technology - evolving with our communities since 1950</div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about-section">
+        <div class="container">
+            <h2 class="milestone-title">Celebrating 75 Years of Service</h2>
+            <p class="section-subtitle">Three generations of families have trusted us to keep them connected. As a member-owned cooperative, every decision we make is focused on serving our communities' best interests</p>
+            
+            <div class="features-container">
+                <div class="feature-item">
+                    <div class="feature-title">Complete Coverage Solutions</div>
+                    <div class="feature-description">From your home to your barn, pool, or BBQ pit - we design networks that reach every corner of your property with reliable connectivity.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-title">No Surprises, Ever</div>
+                    <div class="feature-description">Transparent pricing, no hidden fees, and no contracts required. What we quote is what you pay - because that's how neighbors should treat neighbors.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-title">Local Technicians</div>
+                    <div class="feature-description">Our service teams live in the communities we serve. They understand your challenges and take pride in keeping you connected reliably.</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-title">Future-Ready Technology</div>
+                    <div class="feature-description">Our fiber optic network is built to handle tomorrow's demands - from smart home devices to emerging agricultural technologies.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section class="section quiz-section">
+        <div class="container">
+            <div class="quiz-intro">
+                <h3>Find Your Perfect Internet Plan</h3>
+                <p>Just a few quick questions and we'll point you in the right direction. No commitment, no hassle - just helpful advice from your neighbors.</p>
+            </div>
+            
+            <div class="quiz-options">
+                <div class="quiz-option">
+                    <h4>Find a Plan to Fit Your Lifestyle</h4>
+                    <p>Whether you're streaming shows, working from home, or keeping the whole family connected - we'll help you find the perfect fit.</p>
+                    <a href="#" class="btn btn-primary" onclick="openResidentialQuiz()">Find My Perfect Plan</a>
+                </div>
+                <div class="quiz-option">
+                    <h4>Tell Us About Your Business</h4>
+                    <p>From small offices to large agricultural operations, we'll recommend the perfect plan for your business needs.</p>
+                    <a href="#" class="btn btn-secondary" onclick="openBusinessQuiz()">Get My Business Plan</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Heritage Section -->
+    <div class="heritage-section">
+        <div class="container">
+            <h3>Since 1950</h3>
+            <p>Proudly serving communities across Kentucky, Illinois, and Tennessee for over seven decades</p>
+        </div>
+    </div>
+
+    <!-- Services Section -->
+    <section class="section services-section">
+        <div class="container">
+            <h2 class="section-title">Live Life Connected</h2>
+            <p class="section-subtitle">Member-owned solutions backed by 75 years of reliable service</p>
+            
+            <div class="services-grid">
+                <div class="service-item">
+                    <div class="service-icon">📶</div>
+                    <div class="service-title">Fiber Internet</div>
+                    <div class="service-description">High-speed fiber optic internet for homes and businesses with local technical support and reliable connectivity.</div>
+                </div>
+                <div class="service-item">
+                    <div class="service-icon">🛡️</div>
+                    <div class="service-title">Security Systems</div>
+                    <div class="service-description">Comprehensive security solutions with 24/7 monitoring to protect your home, business, or agricultural operation.</div>
+                </div>
+                <div class="service-item">
+                    <div class="service-icon">📞</div>
+                    <div class="service-title">Phone Service</div>
+                    <div class="service-description">Reliable voice communication services with crystal clear connections and dependable service you can count on.</div>
+                </div>
+                <div class="service-item">
+                    <div class="service-icon">📺</div>
+                    <div class="service-title">Television Service</div>
+                    <div class="service-description">Local and national programming with packages designed to meet the preferences of our community members.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Members Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-item">
+                    <div class="testimonial-text">"As a member-owner of this cooperative, I appreciate that WK&T truly has our community's best interests at heart. Their fiber service keeps our farm operation connected and running efficiently."</div>
+                    <div class="testimonial-author">Sarah Mitchell, Hodgenville</div>
+                </div>
+                <div class="testimonial-item">
+                    <div class="testimonial-text">"Seventy-five years of dependable service speaks volumes. When we needed reliable internet for our business, WK&T was the clear choice. Local people who understand local needs."</div>
+                    <div class="testimonial-author">Thomas Bradley, Bardstown</div>
+                </div>
+                <div class="testimonial-item">
+                    <div class="testimonial-text">"Their technicians know our area and understand the challenges of rural connectivity. WK&T's fiber reaches everywhere we need it - from the house to all our outbuildings."</div>
+                    <div class="testimonial-author">Jennifer Roberts, Springfield</div>
+                </div>
+                <div class="testimonial-item">
+                    <div class="testimonial-text">"Being member-owned makes all the difference. WK&T invests in our community because they are part of our community. That's the cooperative difference."</div>
+                    <div class="testimonial-author">Michael Davis, New Haven</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 WK&T Telecommunications Cooperative</p>
+            <p>Member-owned and community-focused since 1950</p>
+        </div>
+    </footer>
+
+    <script>
+        function openResidentialQuiz() {
+            // This would open your residential quiz in a modal/popup
+            alert('Opening Residential Internet Assessment...');
+        }
+        
+        function openBusinessQuiz() {
+            // This would open the business quiz (to be created)
+            alert('Opening Business Internet Assessment...');
+        }
+    </script>
+</body>
+</html>
